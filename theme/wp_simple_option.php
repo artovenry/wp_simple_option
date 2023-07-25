@@ -58,6 +58,7 @@ class WPSimpleOption{
     if(!$this->is_reading()){
       if($this->has_validation_passed()){
         update_option($this->option_name, $this->sanitized_posted_value());
+        $this->add_message(self::OK);
       }else{
         $this->add_message(self::INVALID);
       }
