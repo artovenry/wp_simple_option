@@ -70,7 +70,7 @@ class WPSimpleOption{
     //--- TEMPLATE_START ?>
     <form method="post" class="dashboard-widget-control-form wp-clearfix">
       <?php wp_nonce_field($this->option_name, $this->nonce_name()); ?>
-      <div class="input-text-wrap" id="title-wrap">
+      <div class="input-text-wrap">
 
 
         <label style="margin-bottom: 4px; display: inline-block;"  for="<?= $this->option_name ?>"><?= $this->option_label ?></label>
@@ -137,13 +137,13 @@ class WPSimpleOption{
 
 }
 
-WPSimpleOption::run([
-  // "capability"=> "edit_posts",
-  "widget_title"=>"ここで設定して",
-  "option_label"=>"固定ツイートのID",
-  "message_invalid"=>"固定ツイートのIDは半角数字のみを入力してください",
-  "validator"=> function($val){
-    if($val === "")return true;
-    return preg_match("/^[0-9]+$/", $val);
-  },
-]);
+// WPSimpleOption::run([
+//   // "capability"=> "edit_posts",
+//   "widget_title"=>"ここで設定して",
+//   "option_label"=>"固定ツイートのID",
+//   "message_invalid"=>"固定ツイートのIDは半角数字のみを入力してください",
+//   "validator"=> function($val){
+//     if($val === "")return true;
+//     return preg_match("/^[0-9]+$/", $val);
+//   },
+// ]);
