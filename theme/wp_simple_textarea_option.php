@@ -1,7 +1,17 @@
 <?php
+require __DIR__ . "/wp_simple_option.php";
 
 class WPSimpleTextAreaOption extends WPSimpleOption{
-  function render_widget(){
+  protected function sanitized_posted_value(){
+    return sanitize_textarea_field($_POST[$this->option_name]);
+  }
+  protected function sanitized_saved_value(){
+    return sanitize_textarea_field(get_option($this->option_name));
+  }
+
+  function render_widget($post, $callback_args){
+    extract($callback_args["args"]);
+    $invalid_style= ($input_field_state == 'invalid') ? 'border: 1px solid red;' : '';
     //--- TEMPLATE_START ?>
     <form method="post" class="dashboard-widget-control-form wp-clearfix">
       <?php wp_nonce_field($this->option_name, $this->nonce_name()); ?>
@@ -13,16 +23,13 @@ class WPSimpleTextAreaOption extends WPSimpleOption{
           <?= $this->option_label ?>
         </label>
         <textarea
-          style="height: 34px; margin-bottom: 8px;padding: 6px 7px;"
+          style="margin-bottom: 8px;padding: 6px 7px; <?= $invalid_style?>"
           name="<?= $this->option_name ?>"
           id="<?= $this->option_name ?>"
           autocomplete="off"
-          rows="3" cols="15"
+          rows="9"
           placeholder="保存したい文章を記入してください"
-          value="<?= $this->sanitized_saved_value() ?>"
-        >
-
-        </textarea>
+        ><?=$value ?></textarea>
       </div>
       <?php submit_button( __( 'Save Changes' ) ); ?>
     </form>
